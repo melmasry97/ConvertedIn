@@ -9,59 +9,66 @@ class GeneralRepository
     public function __construct(protected Model $model)
     {
     }
-    
-    public function get($model, $with = [] , $withCount =[])
+
+    public function withData($with = [], $withCount = [])
     {
-        return $model::with($with)->withCount($withCount)->get();
+        return $this->model->with($with)->withCount($withCount);
     }
 
-    public function getBy($model, $conditions = [], $with = [])
+    public function get($with = [], $withCount = [])
     {
-        return $model::with($with)->where($conditions)->get();
+        return $this->withData($with, $withCount)->get();
     }
 
-    public function getSpeseficeColum($model, $colum, $conditions = [])
+    public function getPaginated($with = [], $withCount = [], $number)
     {
-        return $model::where($conditions)->pluck($colum);
+        return $this->withData($with, $withCount)->paginate($number);
     }
 
-    public function getMultiColum($model, $colums = [], $conditions = [])
+    public function getBy($conditions = [], $with = [])
     {
-        return $model::where($conditions)->get($colums);
+        return $this->model->with($with)->where($conditions)->get();
     }
 
-    public function add($model, $input)
+    public function getSpeseficeColum($colum, $conditions = [])
     {
-        $data = $input;
+        return $this->model->where($conditions)->pluck($colum);
+    }
+
+    public function getMultiColum($colums = [], $conditions = [])
+    {
+        return $this->model->where($conditions)->get($colums);
+    }
+
+    public function add($input)
+    {
         try {
-
-            return $model::firstOrCreate($data);
+            return $this->model->firstOrCreate($input);
         } catch (\Throwable $th) {
             throw $th;
             return null;
         }
     }
 
-    public function create($model, $input)
+    public function create($input)
     {
-        return $model::create($input);
+        return $this->model->create($input);
     }
 
-    public function find($model, $conditions)
+    public function find($conditions)
     {
-        return $model::where($conditions)->first();
+        return $this->model->where($conditions)->first();
     }
 
-    public function findWith($model, $conditions, $with = [], $withCount = [])
+    public function findWith($conditions, $with = [], $withCount = [])
     {
-        return $model::with($with)->withCount($withCount)->where($conditions)->first();
+        return $this->model->with($with)->withCount($withCount)->where($conditions)->first();
     }
 
-    public function delete($model, $conditions)
+    public function delete($conditions)
     {
-        $row = $model::where($conditions)->first();
+        $row = $this->model->where($conditions)->first();
         $row->delete();
         return $row;
     }
-
 }

@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Jobs\UpdateStatisticsJob;
+use App\Repositories\TaskRepository;
+use App\Repositories\UserRepository;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 
 class TaskController extends Controller
 {
+
+    public function __construct(protected TaskRepository $taskRepository, protected UserRepository $userRepository)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $tasks = $this->taskRepository->getPaginated(['assignedUser:id,name', 'assignedBy:id,name'], [], 10);
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -21,7 +30,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $users  = $this->userRepository->users(['id', 'name']);
+        $admins = $this->userRepository->admins(['id', 'name']);
+
+        return view('tasks.create', compact('users', 'admins'));
     }
 
     /**
@@ -29,38 +41,8 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTaskRequest $request, Task $task)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Task $task)
-    {
-        //
+        $task = $this->taskRepository->create($request->validated());
+        $task->assignedUser->dispatch(new UpdateStatisticsJob($task->assigned_to_id));
+        return redirect()->route('tasks.index');
     }
 }

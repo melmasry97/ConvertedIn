@@ -6,21 +6,25 @@ namespace App\Interfaces;
 interface GeneralInterface
 {
 
-    public function get($model, $with = [], $withCount = []);
+    public function withData($with = [], $withCount = []);
 
-    public function getBy($model, $conditions = [], $with = []);
+    public function get($with = [], $withCount = []);
 
-    public function getSpeseficeColum($model, $colum, $conditions = []);
+    public function getPaginated($with = [], $withCount = [], $number);
 
-    public function getMultiColum($model, $colums = [], $conditions = []);
+    public function getBy($conditions = [], $with = []);
 
-    public function add($model, $input);
+    public function getSpeseficeColum($colum, $conditions = []);
 
-    public function create($model, $input);
+    public function getMultiColum($colums = [], $conditions = []);
 
-    public function find($model, $conditions);
+    public function add($input);
 
-    public function findWith($model, $conditions, $with = [], $withCount = []);
+    public function create($input);
 
-    public function delete($model, $conditions);
+    public function find($conditions);
+
+    public function findWith($conditions, $with = [], $withCount = []);
+
+    public function delete($conditions);
 }

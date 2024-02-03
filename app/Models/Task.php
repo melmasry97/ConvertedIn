@@ -12,10 +12,10 @@ class Task extends Model
 
     /**
      * Relationship: Task belongs to a user who is assigned to the task.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function assignedTo()
+    public function assignedUser()
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
     }

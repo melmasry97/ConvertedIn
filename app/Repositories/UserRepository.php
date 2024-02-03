@@ -16,4 +16,26 @@ class UserRepository extends GeneralRepository implements UserInterface
     {
         parent::__construct($model);
     }
+
+    /**
+     * Retrieve all regular user types.
+     *
+     * @param  array  $attributes
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function users(array $attributes = ['*'])
+    {
+        return $this->model->user()->get($attributes);
+    }
+
+    /**
+     * Retrieve all admin users.
+     *
+     * @param  array  $attributes
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function admins(array $attributes = ['*'])
+    {
+        return $this->model->admin()->get($attributes);
+    }
 }
