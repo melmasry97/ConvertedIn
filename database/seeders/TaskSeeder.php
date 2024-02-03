@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Task;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,7 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // Create tasks using the factory
+        Task::factory()->count(100)->create();
     }
 }
