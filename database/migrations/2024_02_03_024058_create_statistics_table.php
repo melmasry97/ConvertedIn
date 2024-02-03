@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('no action');
+            $table->bigInteger('count')->default(0);
             $table->timestamps();
         });
     }
