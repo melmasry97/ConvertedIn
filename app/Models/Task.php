@@ -9,7 +9,13 @@ class Task extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = [
+        'title',
+        'description',
+        'assigned_to_id',
+        'assigned_by_id'
+    ];
+    
     /**
      * Relationship: Task belongs to a user who is assigned to the task.
      *

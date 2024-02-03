@@ -22,7 +22,7 @@ class StatisticRepository extends GeneralRepository implements StatisticInterfac
      * @param integer $number
      * @return Collection
      */
-    public function topUserStatistics(int $number)
+    public function topUsersStatistics(int $number)
     {
         return $this->model->orderByDesc('count')
             ->limit($number)

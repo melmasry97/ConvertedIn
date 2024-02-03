@@ -2,27 +2,28 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\GeneralInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class GeneralRepository
+class GeneralRepository implements GeneralInterface
 {
     public function __construct(protected Model $model)
     {
     }
 
-    public function withData($with = [], $withCount = [])
+    public function withData(array $with)
     {
-        return $this->model->with($with)->withCount($withCount);
+        return $this->model->with($with);
     }
 
-    public function get($with = [], $withCount = [])
+    public function getData($with = [])
     {
-        return $this->withData($with, $withCount)->get();
+        return $this->withData($with)->get();
     }
 
-    public function getPaginated($with = [], $withCount = [], $number)
+    public function getPaginated($with = [], $number)
     {
-        return $this->withData($with, $withCount)->paginate($number);
+        return $this->withData($with)->paginate($number);
     }
 
     public function getBy($conditions = [], $with = [])

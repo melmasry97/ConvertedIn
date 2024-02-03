@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    {{ Auth::user()->name }}
+                    <p>{{ Auth::user()->type ?  'admin': 'user' }}</p>
 
-                    {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $task = $this->taskRepository->create($request->validated());
-        $task->assignedUser->dispatch(new UpdateStatisticsJob($task->assigned_to_id));
+        UpdateStatisticsJob::dispatch(($task->assigned_to_id));
         return redirect()->route('tasks.index');
     }
 }

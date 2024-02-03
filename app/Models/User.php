@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     /**
      * Scope: Filter users to retrieve users with the 'User' type.
-     * 
+     *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -81,6 +81,6 @@ class User extends Authenticatable
      */
     public function scopeAdmin(Builder $query)
     {
-        $query->where('user_type', '=', User::ADMIN);
+        $query->where('type', '=', User::ADMIN);
     }
 }

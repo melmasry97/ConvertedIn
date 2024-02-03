@@ -7,5 +7,5 @@ use App\Interfaces\GeneralInterface;
 
 interface StatisticInterface extends GeneralInterface
 {
-    public function topUserStatistics(int $number);
+    public function topUsersStatistics(int $number);
 }
