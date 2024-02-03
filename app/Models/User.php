@@ -6,12 +6,20 @@ namespace App\Models;
 use App\Enums\UserType;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * Define User types
+     */
+    const USER = 0;
+    const ADMIN = 1;
+
 
     /**
      * The attributes that are mass assignable.
@@ -45,10 +53,34 @@ class User extends Authenticatable
     ];
 
     /**
-     * Define User type
+     * Defines a one-to-many relationship with the Task model.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function userType(): UserType
+    public function tasks()
     {
-        return UserType::from($this->attributes['user_type']);
+        return $this->hasMany(Task::class, 'assigned_to_id');
+    }
+
+    /**
+     * Scope: Filter users to retrieve users with the 'User' type.
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUser(Builder $query)
+    {
+        $query->where('type', '=', User::USER);
+    }
+
+
+    /**
+     * Scope: Filter users to retrieve users with the 'Admin' type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAdmin(Builder $query)
+    {
+        $query->where('user_type', '=', User::ADMIN);
     }
 }
