@@ -11,7 +11,7 @@ class Statistic extends Model
 
     protected $fillable = [
         'user_id',
-        'task_count'
+        'count'
     ];
 
     public function user()

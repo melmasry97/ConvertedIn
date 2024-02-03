@@ -21,7 +21,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = $this->taskRepository->getPaginated(['assignedUser:id,name', 'assignedBy:id,name'], [], 10);
+        $tasks = $this->taskRepository->getPaginated(['assignedUser:id,name', 'assignedBy:id,name'], 10);
         return view('tasks.index', compact('tasks'));
     }
 
@@ -41,8 +41,10 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
+
         $task = $this->taskRepository->create($request->validated());
-        UpdateStatisticsJob::dispatch(($task->assigned_to_id));
+        // dd($task, $task->assigned_to_id);
+        UpdateStatisticsJob::dispatch($task->assigned_to_id);
         return redirect()->route('tasks.index');
     }
 }
