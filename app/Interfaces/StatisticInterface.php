@@ -5,6 +5,6 @@ namespace App\Interfaces;
 use App\Interfaces\GeneralInterface;
 
 
-interface StatisticeInterface extends GeneralInterface
+interface StatisticInterface extends GeneralInterface
 {
 }

@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Visit;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Database\Eloquent\Model;
 
 class GeneralRepository
 {
+    public function __construct(protected Model $model)
+    {
+    }
+    
     public function get($model, $with = [] , $withCount =[])
     {
         return $model::with($with)->withCount($withCount)->get();
