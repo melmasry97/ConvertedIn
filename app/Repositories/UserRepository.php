@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Interfaces\UserInterface;
+use Illuminate\Support\Facades\Cache;
 use App\Repositories\GeneralRepository;
 
 
@@ -25,7 +26,9 @@ class UserRepository extends GeneralRepository implements UserInterface
      */
     public function users(array $attributes = ['*'])
     {
-        return $this->model->user()->get($attributes);
+        return Cache::remember('users', now()->addMinutes(10), function () use ($attributes) {
+            return User::user()->get($attributes);
+        });
     }
 
     /**
@@ -36,6 +39,8 @@ class UserRepository extends GeneralRepository implements UserInterface
      */
     public function admins(array $attributes = ['*'])
     {
-        return $this->model->admin()->get($attributes);
+        return Cache::remember('admins', now()->addMinutes(10), function () use ($attributes) {
+            return User::admin()->get($attributes);
+        });
     }
 }

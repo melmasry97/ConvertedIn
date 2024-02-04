@@ -41,35 +41,14 @@ class GeneralRepository implements GeneralInterface
         return $this->model->where($conditions)->get($colums);
     }
 
-    public function add($input)
-    {
-        try {
-            return $this->model->firstOrCreate($input);
-        } catch (\Throwable $th) {
-            throw $th;
-            return null;
-        }
-    }
-
     public function create($input)
     {
         return $this->model->create($input);
     }
 
-    public function find($conditions)
-    {
-        return $this->model->where($conditions)->first();
-    }
 
-    public function findWith($conditions, $with = [], $withCount = [])
+    public function find(int $id): Model
     {
-        return $this->model->with($with)->withCount($withCount)->where($conditions)->first();
-    }
-
-    public function delete($conditions)
-    {
-        $row = $this->model->where($conditions)->first();
-        $row->delete();
-        return $row;
+        return $this->model->findOrFail($id);
     }
 }

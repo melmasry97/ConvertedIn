@@ -34,6 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
+
                         <ul class="navbar-nav me-auto">
 
                             <!-- Authentication Links -->
@@ -55,13 +56,13 @@
                                     Statistic
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                    <li><a class="dropdown-item" href="{{ route('statistics.index') }}">Statistics</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('statistics.index') }}">Statistics</a>
+                                    </li>
                                 </ul>
                             </li>
 
                         </ul>
                     @endauth
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -71,7 +72,6 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
-
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

@@ -16,5 +16,4 @@ class TaskPolicy
     {
         return $user->Admin();
     }
-
 }

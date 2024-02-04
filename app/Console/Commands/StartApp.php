@@ -41,15 +41,17 @@ class StartApp extends Command
             return;
         }
 
+        $copyCommand = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'copy .env.example .env' : 'cp .env.example .env';
+
         $commands = [
-            'cp .env.example .env',
+            $copyCommand,
             'composer install',
             'npm install',
             'npm run build',
             'php artisan optimize:clear',
             'php artisan key:generate',
             'php artisan config:cache',
-            'php artisan db:create task_management_system',
+            // 'php artisan db:create task_management_system', // This command might need a custom implementation
             'php artisan migrate:fresh --seed',
             'php artisan serve',
         ];

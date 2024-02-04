@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropIndex('type');
-            $table->dropColumn('type');
+            $table->dropIndex(['type']);
+            $table->dropColumn(['type']);
         });
     }
 };

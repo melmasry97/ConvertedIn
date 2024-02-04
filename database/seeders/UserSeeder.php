@@ -5,9 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 class UserSeeder extends Seeder
 {
     /**
@@ -15,13 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $password = Hash::make('password');
         for ($i = 0; $i < 10000; $i++) {
             $data[] = [
                 'name' => fake()->name(),
                 'email' => fake()->unique()->safeEmail(),
-                'email_verified_at' => now()->toDateTimeString(),
-                'password' => $password,
+                'email_verified_at' => now(),
+                'password' => '$2y$12$QpJZW70yllThExaIkrccM.VC68s0LBH6pA7PpLeKIaU20NEUmCVW6',
                 'remember_token' => Str::random(10),
             ];
         }
