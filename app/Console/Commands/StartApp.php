@@ -50,8 +50,7 @@ class StartApp extends Command
             'npm run build',
             'php artisan optimize:clear',
             'php artisan key:generate',
-            'php artisan config:cache',
-            // 'php artisan db:create task_management_system', // This command might need a custom implementation
+            'php artisan db:create ' . config('database.connections.' . config('database.default') . '.database'), // This command might need a custom implementation
             'php artisan migrate:fresh --seed',
             'php artisan serve',
         ];
