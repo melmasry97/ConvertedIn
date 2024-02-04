@@ -1,5 +1,10 @@
 name: Laravel CI
-on: [ main ]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
   laravel:
     name: Laravel Testsuite
