@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,6 +71,27 @@ class CreateDatabase extends Command
 
         Config::set("database.connections." . config('database.default') . ".database", $databaseName);
 
+        $this->updateEnvFiles($databaseName);
+
         $this->info("Database $databaseName created successfully.");
+    }
+
+    /**
+     * Update DB_DATABASE value in .env and .env.example files.
+     */
+    protected function updateEnvFiles($databaseName)
+    {
+        $envPath = base_path('.env');
+        $examplePath = base_path('.env.example');
+
+        // Update .env
+        $envContents = File::get($envPath);
+        $updatedEnvContents = preg_replace('/DB_DATABASE=.*/', "DB_DATABASE={$databaseName}", $envContents);
+        File::put($envPath, $updatedEnvContents);
+
+        // Update .env.example
+        $exampleContents = File::get($examplePath);
+        $updatedExampleContents = preg_replace('/DB_DATABASE=.*/', "DB_DATABASE={$databaseName}", $exampleContents);
+        File::put($examplePath, $updatedExampleContents);
     }
 }
